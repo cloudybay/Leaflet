@@ -115,6 +115,13 @@ L.Evented = L.Class.extend({
 			// so simple array makes the memory footprint better while not degrading performance
 
 			events[type] = events[type] || [];
+			for (var i = 0, len = events[type].length; i < len; i++) {
+				if (events[type][i].fn === fn) {
+					// This given callback has yet been registered once.
+					console.warn('Not registering already registered callcack', fn, 'for type', type);
+					return;
+				}
+			}
 			events[type].push({fn: fn});
 		}
 	},
